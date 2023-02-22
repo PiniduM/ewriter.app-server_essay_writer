@@ -1,40 +1,51 @@
 import getCompletion from "../functions/getCompletion.js";
 
 const essayProvider = (req, res) => {
-  const topic = req.body.topic;
-  const wordsCount = req.body.count;
+  const data = req.body;
+  const topic = data.topic;
+  const wordsCount = data.count;
+  const type = data.type;
 
-  if (!(topic && wordsCount)) {
+  if (!(topic && wordsCount && type)) {
     console.log("details missing");
     res.status(406).send("details_missing");
     return;
   }
 
-  if (topic.length > 31) {
+  if (topic.length > 30) {
     console.log("unregistered_topics_length_exceeded");
     res.status(406).send("unregisted topic length exceeded");
     return;
   }
 
-  if (wordsCount > 301) {
+  if (wordsCount > 300) {
     console.log("unregistered words count exceeded");
     res.status(406).send("unregisted_words_count_exceeded");
     return;
   }
 
-  const prompt = `You are a professional essay writer,write a complete and meaningful essay containing ${wordsCount} words on topic "${topic}"`;
+  let prompt;
+  if (type === "general") {
+    const complexity = data.complexity;
+    prompt = `Please write an essay on "${topic}" in ${wordsCount} words.Use ${complexity} vocabulary and sentence structures.`
+  }
+  else if ((type === "personalized")) {
+    const profileData = data.profileData;
+    prompt = `Dear ${profileData.name}, as a ${profileData.occupation} who is ${profileData.age} years old and from ${profileData.country} write a meaningful essay on "${topic}" in ${wordsCount} words.`
+  }
+  else prompt = `You are a professional essay writer,write a complete and meaningful essay on "${topic}" in ${wordsCount} words.`;
 
-  const model = "text-davinci-003";
   //const model = "text-curie-001";
 
+  console.log(prompt);
 
-  getCompletion(prompt,model)
+  getCompletion(prompt)
     .then((completion) => {
       console.log(completion);
       res.status(200).send(completion);
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err.request.data);
       res.status(500).send("unknown_err");
     });
 };

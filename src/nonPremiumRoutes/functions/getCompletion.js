@@ -1,17 +1,22 @@
 import { Configuration, OpenAIApi } from "openai";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 
 dotenv.config();
 
- const apiKey = process.env.OPENAIAPIKEY;
+const apiKey = process.env.OPENAIAPIKEY;
 const configuration = new Configuration({
   apiKey,
 });
 
 const openai = new OpenAIApi(configuration);
 
-const getCompletion = async (prompt,maxLength = 400,model = "text-curie-001") => {
-  console.log(model,maxLength); //
+const getCompletion = async (
+  prompt,
+  model = "text-davinci-003",
+  maxLength = 400
+) => {
+  //if error occured check wether the parameters are prvided properly
+  console.log(model, maxLength);
   try {
     const response = await openai.createCompletion({
       model,
