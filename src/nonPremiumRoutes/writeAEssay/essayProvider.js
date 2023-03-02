@@ -31,7 +31,7 @@ const essayProvider = (req, res) => {
   }
   else if ((type === "personalized")) {
     const profileData = data.profileData;
-    prompt = `Dear ${profileData.name}, as a ${profileData.occupation} who is ${profileData.age} years old and from ${profileData.country} write a meaningful essay on "${topic}" in ${wordsCount} words.`
+    prompt = `Dear ${profileData.name || "dave"}, as a ${profileData.occupation || "student"} who is ${profileData.age || "18"} years old and from ${profileData.country || "usa"} write a meaningful essay on "${topic}" in ${wordsCount} words.`
   }
   else prompt = `You are a professional essay writer,write a complete and meaningful essay on "${topic}" in ${wordsCount} words.`;
 
