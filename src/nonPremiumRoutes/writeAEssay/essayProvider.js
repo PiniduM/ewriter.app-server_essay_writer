@@ -31,7 +31,11 @@ const essayProvider = (req, res) => {
   }
   else if ((type === "personalized")) {
     const profileData = data.profileData;
-    prompt = `Dear ${profileData.name || "dave"}, as a ${profileData.occupation || "student"} who is ${profileData.age || "18"} years old and from ${profileData.country || "usa"} write a meaningful essay on "${topic}" in ${wordsCount} words.`
+    //prompt = `Dear ${profileData.name || "dave"}, as a ${profileData.occupation || "student"} who is ${profileData.age || "18"} years old and from ${profileData.country || "usa"} write a meaningful essay on "${topic}" in ${wordsCount} words.`
+    //prompt = `Assume that you are pinidu, a collage student living in sri lanka.add personal references but do not do it unnecessarily.`
+    prompt = `Imagine that you are ${profileData.name || "dave"}, a ${profileData.age || "18"} years old ${profileData.occupation || "student"} from ${profileData.country || "usa"}. Write an essay exploring the topic ${topic} IN ${wordsCount}WORDS. Be sure to incorporate relevant personal details to enhance the essay, but only include information that is necessary to support your arguments and illustrate your perspective.`
+    console.log(prompt);
+
   }
   else prompt = `You are a professional essay writer,write a complete and meaningful essay on "${topic}" in ${wordsCount} words.`;
 
@@ -41,12 +45,10 @@ const essayProvider = (req, res) => {
 
   getCompletion(prompt)
     .then((completion) => {
-      console.log(completion);
       res.status(200).send(completion);
     })
     .catch((err) => {
-      console.log(err.request.data);
-      res.status(500).send("unknown_err");
+      res.status(500).send("unknown error");
     });
 };
 

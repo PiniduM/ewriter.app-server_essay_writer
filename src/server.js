@@ -17,4 +17,4 @@ server.use("/nonpremium",nonPremiumRouter);
 
 
 
-server.listen(5003,() => console.log("listening to http://5003/ "));
+server.listen(5003,() => console.log("listening to port:5003"));
