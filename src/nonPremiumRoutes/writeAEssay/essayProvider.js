@@ -18,7 +18,7 @@ const essayProvider = (req, res) => {
     return;
   }
 
-  if (wordsCount > 300) {
+  if (!["70","100","150","200","250"].includes(wordsCount)) {
     console.log("unregistered words count exceeded");
     res.status(406).send("unregisted_words_count_exceeded");
     return;
@@ -33,13 +33,14 @@ const essayProvider = (req, res) => {
     const profileData = data.profileData;
     //prompt = `Dear ${profileData.name || "dave"}, as a ${profileData.occupation || "student"} who is ${profileData.age || "18"} years old and from ${profileData.country || "usa"} write a meaningful essay on "${topic}" in ${wordsCount} words.`
     //prompt = `Assume that you are pinidu, a collage student living in sri lanka.add personal references but do not do it unnecessarily.`
-    prompt = `Imagine that you are ${profileData.name || "dave"}, a ${profileData.age || "18"} years old ${profileData.occupation || "student"} from ${profileData.country || "usa"}. Write an essay exploring the topic ${topic} IN ${wordsCount} WORDS. Be sure to incorporate relevant personal details to enhance the essay, but only include information that is necessary to support your arguments and illustrate your perspective.`
+    prompt = `Imagine that you are ${profileData.name || "dave"}, a ${profileData.age || "18"} years old ${profileData.occupation || "student"} from ${profileData.country || "usa"}. Write an essay exploring the topic ${topic} IN ${wordsCount} WORDS. Be sure to incorporate relevant personal details to enhance the essay` //,but only include information that is necessary to support your arguments and illustrate your perspective.
     console.log(prompt);
 
   }
   else prompt = `You are a professional essay writer,write a complete and meaningful essay on "${topic}" in ${wordsCount} words.`;
 
   //const model = "text-curie-001";
+  prompt += "aware of tenses.do not write things like 'i am a language model',just write the essay.";
 
   console.log(prompt);
 
