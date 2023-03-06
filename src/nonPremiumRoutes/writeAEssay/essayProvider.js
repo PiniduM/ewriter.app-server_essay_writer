@@ -40,7 +40,7 @@ const essayProvider = (req, res) => {
   else prompt = `You are a professional essay writer,write a complete and meaningful essay on "${topic}" in ${wordsCount} words.`;
 
   //const model = "text-curie-001";
-  prompt += "aware of tenses.do not write things like 'i am a language model',just write the essay.";
+  prompt += "aware of tenses.do not write anything like 'i am a language model',just write the essay.";
 
   console.log(prompt);
 
